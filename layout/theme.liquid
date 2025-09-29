@@ -2,14 +2,14 @@
 <html>
   <head>
 <!--
-888888b.                              888                88888888888 888                                      
-888  "88b                             888                    888     888                                      
-888  .88P                             888                    888     888                                      
-8888888K.   .d88b.   .d88b.  .d8888b  888888 .d88b.  888d888 888     88888b.   .d88b.  88888b.d88b.   .d88b.  
-888  "Y88b d88""88b d88""88b 88K      888   d8P  Y8b 888P"   888     888 "88b d8P  Y8b 888 "888 "88b d8P  Y8b 
-888    888 888  888 888  888 "Y8888b. 888   88888888 888     888     888  888 88888888 888  888  888 88888888 
-888   d88P Y88..88P Y88..88P      X88 Y88b. Y8b.     888     888     888  888 Y8b.     888  888  888 Y8b.     
-8888888P"   "Y88P"   "Y88P"   88888P'  "Y888 "Y8888  888     888     888  888  "Y8888  888  888  888  "Y8888  
+888888b.                              888                88888888888 888
+888  "88b                             888                    888     888
+888  .88P                             888                    888     888
+8888888K.   .d88b.   .d88b.  .d8888b  888888 .d88b.  888d888 888     88888b.   .d88b.  88888b.d88b.   .d88b.
+888  "Y88b d88""88b d88""88b 88K      888   d8P  Y8b 888P"   888     888 "88b d8P  Y8b 888 "888 "88b d8P  Y8b
+888    888 888  888 888  888 "Y8888b. 888   88888888 888     888     888  888 88888888 888  888  888 88888888
+888   d88P Y88..88P Y88..88P      X88 Y88b. Y8b.     888     888     888  888 Y8b.     888  888  888 Y8b.
+8888888P"   "Y88P"   "Y88P"   88888P'  "Y888 "Y8888  888     888     888  888  "Y8888  888  888  888  "Y8888
 -->
     <title>
       {{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags |
@@ -49,25 +49,28 @@
     {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
     {{ 'swiper-bundle.min.js' | asset_url | script_tag }}
 
+    {% comment %} Geolocation redirect {% endcomment %}
+    {% render 'redirect-usa-customers' %}
+
     <script src="{{ 'timesact.js' | asset_url }}" defer="defer"></script>
-    
+
     <meta name="google-site-verification" content="Oc2gYphETdza0sQQ4KOiRHclxR_U6mzWq70eMIVOP3I" />
   </head>
   <body class="template--{{template}}">
           <!--
-888888b.                              888                88888888888 888                                      
-888  "88b                             888                    888     888                                      
-888  .88P                             888                    888     888                                      
-8888888K.   .d88b.   .d88b.  .d8888b  888888 .d88b.  888d888 888     88888b.   .d88b.  88888b.d88b.   .d88b.  
-888  "Y88b d88""88b d88""88b 88K      888   d8P  Y8b 888P"   888     888 "88b d8P  Y8b 888 "888 "88b d8P  Y8b 
-888    888 888  888 888  888 "Y8888b. 888   88888888 888     888     888  888 88888888 888  888  888 88888888 
-888   d88P Y88..88P Y88..88P      X88 Y88b. Y8b.     888     888     888  888 Y8b.     888  888  888 Y8b.     
-8888888P"   "Y88P"   "Y88P"   88888P'  "Y888 "Y8888  888     888     888  888  "Y8888  888  888  888  "Y8888  
+888888b.                              888                88888888888 888
+888  "88b                             888                    888     888
+888  .88P                             888                    888     888
+8888888K.   .d88b.   .d88b.  .d8888b  888888 .d88b.  888d888 888     88888b.   .d88b.  88888b.d88b.   .d88b.
+888  "Y88b d88""88b d88""88b 88K      888   d8P  Y8b 888P"   888     888 "88b d8P  Y8b 888 "888 "88b d8P  Y8b
+888    888 888  888 888  888 "Y8888b. 888   88888888 888     888     888  888 88888888 888  888  888 88888888
+888   d88P Y88..88P Y88..88P      X88 Y88b. Y8b.     888     888     888  888 Y8b.     888  888  888 Y8b.
+8888888P"   "Y88P"   "Y88P"   88888P'  "Y888 "Y8888  888     888     888  888  "Y8888  888  888  888  "Y8888
 -->
     <div class="container">
       <div class="container__top-part">
         {% section 'top-info-bar' %}
-        
+
         <div id="booster__popup--holder" class="booster__popup--holder">
         </div>
 
@@ -88,7 +91,7 @@
         {% endif %}
 
         {% section 'bottom-info-bar' %}
-      </div> 
+      </div>
 
       <div id="quickbuy__modal" class="modal"><div onclick="closeModal(event)" class="overlay"></div><div class="content"></div></div>
 
@@ -142,7 +145,7 @@
     {% comment %} If you want to serve the non-minified version, remove .min extension {% endcomment %}
     {{ 'booster.min.js' | asset_url | script_tag }}
     {{ 'unicons.css' | asset_url | stylesheet_tag }}
- 
+
     {% unless settings.bodyHTML == blank %}
       {{settings.bodyHTML}}
     {% endunless %}
@@ -169,27 +172,27 @@
     {% endif %}
 
     {% render 'layout__custom-code--body' %}
-    
+
 
     {% if settings.discount_popup_enable %}
       {% render 'discount_popup' %}
     {% endif %}
 
     {% if settings.productCompare %}
-      {% render 'product-compare-modal' %}  
+      {% render 'product-compare-modal' %}
       <div class="product-compare-modal--overlay" data-compare-product-modal-overlay> </div>
     {% endif %}
 
     {% render 'floating--socials' %}
   <!--
-888888b.                              888                88888888888 888                                      
-888  "88b                             888                    888     888                                      
-888  .88P                             888                    888     888                                      
-8888888K.   .d88b.   .d88b.  .d8888b  888888 .d88b.  888d888 888     88888b.   .d88b.  88888b.d88b.   .d88b.  
-888  "Y88b d88""88b d88""88b 88K      888   d8P  Y8b 888P"   888     888 "88b d8P  Y8b 888 "888 "88b d8P  Y8b 
-888    888 888  888 888  888 "Y8888b. 888   88888888 888     888     888  888 88888888 888  888  888 88888888 
-888   d88P Y88..88P Y88..88P      X88 Y88b. Y8b.     888     888     888  888 Y8b.     888  888  888 Y8b.     
-8888888P"   "Y88P"   "Y88P"   88888P'  "Y888 "Y8888  888     888     888  888  "Y8888  888  888  888  "Y8888  
---> 
+888888b.                              888                88888888888 888
+888  "88b                             888                    888     888
+888  .88P                             888                    888     888
+8888888K.   .d88b.   .d88b.  .d8888b  888888 .d88b.  888d888 888     88888b.   .d88b.  88888b.d88b.   .d88b.
+888  "Y88b d88""88b d88""88b 88K      888   d8P  Y8b 888P"   888     888 "88b d8P  Y8b 888 "888 "88b d8P  Y8b
+888    888 888  888 888  888 "Y8888b. 888   88888888 888     888     888  888 88888888 888  888  888 88888888
+888   d88P Y88..88P Y88..88P      X88 Y88b. Y8b.     888     888     888  888 Y8b.     888  888  888 Y8b.
+8888888P"   "Y88P"   "Y88P"   88888P'  "Y888 "Y8888  888     888     888  888  "Y8888  888  888  888  "Y8888
+-->
   </body>
 </html>
