@@ -1,0 +1,80 @@
+<!-- redirect-canada-customers.liquid -->
+<script>
+  fetch('https://ipapi.co/json/')
+    .then(response => response.json())
+    .then(data => {
+      if (window.location.pathname === "/" && data.country_code === "CA") {
+        showRedirectPopup();
+      }
+    })
+    .catch(error => {
+      console.error("Geolocation error:", error);
+    });
+
+  function showRedirectPopup() {
+    // Create popup container
+    const popup = document.createElement("div");
+    popup.innerHTML = `
+      <div id="redirect-popup-overlay" style="
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      ">
+        <div style="
+          background: white;
+          padding: 2rem;
+          max-width: 500px;
+          border-radius: 12px;
+          text-align: center;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        ">
+          <h3 style="margin-bottom: 1rem;">You're visiting Levasleep USA from Canada</h3>
+          <p style="margin-bottom: 1.5rem;">Would you like to shop on our Canadian store (levasleep.com) for better shipping rates and faster delivery?</p>
+          <button id="redirect-yes">Yes, take me there</button>
+          <button id="redirect-no">No, stay here</button>
+        </div>
+      </div>
+
+      <style>
+        #redirect-yes {
+          background: #452276;
+          color: #fff;
+          padding: 0.6rem 1.2rem;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          margin-right: 0.5rem;
+        }
+        #redirect-yes:hover {
+          background: #452276cc;
+        }
+        #redirect-no {
+          background: #e5e5e5;
+          color: #333;
+          padding: 0.6rem 1.2rem;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+        }
+        #redirect-no:hover {
+          background: #e5e5e5cc;
+        }
+      </style>
+    `;
+    document.body.appendChild(popup);
+
+    // Add event listeners
+    document.getElementById("redirect-yes").addEventListener("click", () => {
+      // Force redirect to levasleep.com
+      window.location.href = "https://www.levasleep.com";
+    });
+
+    document.getElementById("redirect-no").addEventListener("click", () => {
+      document.getElementById("redirect-popup-overlay").remove();
+    });
+  }
+</script>
