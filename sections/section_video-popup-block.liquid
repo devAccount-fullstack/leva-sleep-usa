@@ -1,0 +1,128 @@
+{% schema %}
+{
+  "name": "Video Popup Section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "video_popup",
+      "name": "Video Popup Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Video URL",
+          "info": "Supports YouTube, Vimeo, or MP4 URLs"
+        },
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Thumbnail Image"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Play Video"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Popup",
+      "category": "Media",
+      "blocks": [
+        {
+          "type": "video_popup"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<div class="video-popup-section">
+  {% for block in section.blocks %}
+    <div class="video-popup-block" {{ block.shopify_attributes }}>
+      {% if block.settings.thumbnail != blank %}
+        <img src="{{ block.settings.thumbnail | img_url: 'medium' }}" class="video-thumbnail" alt="Video Thumbnail">
+      {% endif %}
+      <button class="video-popup-button" data-video-url="{{ block.settings.video_url }}">
+        {{ block.settings.button_text }}
+      </button>
+    </div>
+  {% endfor %}
+</div>
+
+<div id="video-modal" class="video-modal">
+  <div class="video-modal-content">
+    <span class="close-modal">&times;</span>
+    <iframe id="video-frame" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+  </div>
+</div>
+
+<style>
+.video-popup-section {
+  text-align: center;
+  margin-top: 20px;
+}
+.video-thumbnail {
+  cursor: pointer;
+  max-width: 100%;
+}
+.video-popup-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.video-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.video-modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 24px;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const videoButtons = document.querySelectorAll(".video-popup-button");
+  const modal = document.getElementById("video-modal");
+  const closeModal = document.querySelector(".close-modal");
+  const videoFrame = document.getElementById("video-frame");
+
+  videoButtons.forEach(button => {
+    button.addEventListener("click", function() {
+      const videoUrl = button.getAttribute("data-video-url");
+      videoFrame.src = videoUrl.includes("youtube") || videoUrl.includes("vimeo") ? videoUrl + "?autoplay=1" : videoUrl;
+      modal.style.display = "block";
+    });
+  });
+
+  closeModal.addEventListener("click", function() {
+    modal.style.display = "none";
+    videoFrame.src = "";
+  });
+});
+</script>
